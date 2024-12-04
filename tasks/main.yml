@@ -1,0 +1,32 @@
+---
+- name: Install php and mandatory extensions
+  apt:
+    pkg:
+      - php
+      - php-curl
+      - php-mbstring
+      - php-xml
+    state: latest
+
+- name: Install php extra extensions
+  apt:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ php_extensions }}"
+
+- name: Copy php directory
+  copy:
+    src: php
+    dest: /root/
+
+- name: Add execution permission
+  file:
+    path: /root/php/run.sh
+    mode: '0755'
+
+- name: Install Composer
+  script: php/composer.sh
+
+- name: Run PHP containers and Memcached containers
+  command: /root/php/run.sh --directory "{{ item.directory }}" --name "{{ item.name }}" --port "{{ item.port | default('9000') }}" --version "{{ item.version | default('fpm') }}"
+  loop: "{{ php_containers }}"
