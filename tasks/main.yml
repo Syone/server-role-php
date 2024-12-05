@@ -31,3 +31,4 @@
 - name: Run PHP containers and Memcached containers
   command: /root/php/run.sh --directory "{{ item.directory }}" --name "{{ item.name }}" --port "{{ item.port | default('9000') }}" --version "{{ item.version | default('fpm') }}"
   loop: "{{ php_containers }}"
+  when: php_containers is defined and php_containers | length > 0
