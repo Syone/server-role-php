@@ -13,6 +13,7 @@
     name: "{{ item }}"
     state: latest
   loop: "{{ php_extensions }}"
+  when: php_extensions is defined and php_extensions | length > 0
 
 - name: Copy php directory
   copy:
