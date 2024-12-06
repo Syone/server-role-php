@@ -58,7 +58,7 @@ docker stop "php-$name" 2>/dev/null
 docker rm "php-$name" 2>/dev/null
 
 # Run php fpm container
-docker run --name "php-$name" --network "$network" --restart always -v /var/www/"$directory":/var/www/"$directory" -v "$config/php.ini":/usr/local/etc/php/php.ini -v "$config/php-fpm.conf":/usr/local/etc/php-fpm.d/php-fpm.conf -d -p 127.0.0.1:"$port":9000 "php-$version"
+docker run --name "php-$name" --network "$network" --restart always -v /var/www/"$directory":/var/www/"$directory" -v "$config/php.ini":/usr/local/etc/php/conf.d/php.ini -v "$config/php-fpm.conf":/usr/local/etc/php-fpm.d/php-fpm.conf -d -p 127.0.0.1:"$port":9000 "php-$version"
 
 # Run memcached container
 docker stop "memcached-$name" 2>/dev/null
