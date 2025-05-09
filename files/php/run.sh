@@ -27,6 +27,7 @@ done
 [ "$port" = "" ] && port="9000"
 [ "$network" = "" ] && network="network-$name"
 [ "$version" = "" ] && version="fpm"
+[ "$extensions" = "" ] && extensions="pdo_mysql exif gmp zip opcache mysqli intl"
 
 # Conf files
 config="$DIR/php-$name"
@@ -51,7 +52,7 @@ docker network create "$network" 2>/dev/null
 
 # Build php fpm image
 docker pull "php:$version"
-docker build -t "php-$version" --build-arg="PHP_VERSION=$version" "$DIR"
+docker build -t "php-$version" --build-arg="PHP_VERSION=$version" --build-arg="PHP_EXTENSIONS=$extensions" "$DIR"
 
 # Stop and delete existing container
 docker stop "php-$name" 2>/dev/null

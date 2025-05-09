@@ -1,6 +1,8 @@
 ARG PHP_VERSION=fpm
 FROM php:${PHP_VERSION}
 
+ARG PHP_EXTENSIONS="pdo_mysql exif gmp zip opcache mysqli intl"
+
 RUN apt-get update && apt-get install -y \
 		libfreetype6-dev \
 		libjpeg62-turbo-dev \
@@ -16,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 		zlib1g-dev \
 	&& pecl install memcached \
 	&& docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-	&& docker-php-ext-install -j$(nproc) gd pdo_mysql exif gmp zip opcache mysqli intl \
+	&& docker-php-ext-install -j$(nproc) gd ${PHP_EXTENSIONS} \
 	&& docker-php-ext-enable memcached
 
 RUN echo "sendmail_path=/usr/sbin/sendmail -t -i" >> /usr/local/etc/php/conf.d/sendmail.ini
