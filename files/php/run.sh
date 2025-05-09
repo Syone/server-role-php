@@ -52,14 +52,14 @@ docker network create "$network" 2>/dev/null
 
 # Build php fpm image
 docker pull "php:$version"
-docker build -t "php-$version" --build-arg="PHP_VERSION=$version" --build-arg="PHP_EXTENSIONS=$extensions" "$DIR"
+docker build -t "php-image-$name" --build-arg="PHP_VERSION=$version" --build-arg="PHP_EXTENSIONS=$extensions" "$DIR"
 
 # Stop and delete existing container
 docker stop "php-$name" 2>/dev/null
 docker rm "php-$name" 2>/dev/null
 
 # Run php fpm container
-docker run --name "php-$name" --network "$network" --restart always -v /var/www/"$directory":/var/www/"$directory" -v "$config/php.ini":/usr/local/etc/php/conf.d/php.ini -v "$config/php-fpm.conf":/usr/local/etc/php-fpm.d/php-fpm.conf -d -p 127.0.0.1:"$port":9000 "php-$version"
+docker run --name "php-$name" --network "$network" --restart always -v /var/www/"$directory":/var/www/"$directory" -v "$config/php.ini":/usr/local/etc/php/conf.d/php.ini -v "$config/php-fpm.conf":/usr/local/etc/php-fpm.d/php-fpm.conf -d -p 127.0.0.1:"$port":9000 "php-image-$name" --nodaemonize --fpm-config /usr/local/etc/php-fpm.conf
 
 # Run memcached container
 docker stop "memcached-$name" 2>/dev/null
