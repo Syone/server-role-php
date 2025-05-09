@@ -52,7 +52,7 @@ docker network create "$network" 2>/dev/null
 
 # Build php fpm image
 docker pull "php:$version"
-docker build -t "php-image-$name" --build-arg="PHP_VERSION=$version" --build-arg="PHP_EXTENSIONS=$extensions" "$DIR"
+docker build -t "php-image-$name" --build-arg="PHP_VERSION=$version" --build-arg="PHP_EXTENSIONS=\"$extensions\"" "$DIR"
 
 # Stop and delete existing container
 docker stop "php-$name" 2>/dev/null
