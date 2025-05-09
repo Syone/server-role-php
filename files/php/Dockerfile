@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
 		libgmp-dev \
 		libzip-dev \
 		libicu-dev \
+		libxml2-dev \
 		imagemagick \
 		pngquant \
 		sendmail \
