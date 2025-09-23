@@ -47,6 +47,10 @@ if [ ! -e "$config/php-fpm.conf" ]; then
 	cp "$DIR/php-fpm.conf" "$config/php-fpm.conf"
 fi
 
+if [ ! -e "$config/www.conf" ]; then
+	cp "$DIR/www.conf" "$config/www.conf"
+fi
+
 # Create network
 docker network create "$network" 2>/dev/null
 
@@ -59,7 +63,7 @@ docker stop "php-$name" 2>/dev/null
 docker rm "php-$name" 2>/dev/null
 
 # Run php fpm container
-docker run --name "php-$name" --network "$network" --restart always -v /var/www/"$directory":/var/www/"$directory" -v "$config/php.ini":/usr/local/etc/php/conf.d/php.ini -v "$config/php-fpm.conf":/usr/local/etc/php-fpm.d/php-fpm.conf -d -p 127.0.0.1:"$port":9000 "php-image-$name" --nodaemonize --fpm-config /usr/local/etc/php-fpm.conf
+docker run --name "php-$name" --network "$network" --restart always -v /var/www/"$directory":/var/www/"$directory" -v "$config/php.ini":/usr/local/etc/php/conf.d/php.ini -v "$config/php-fpm.conf":/usr/local/etc/php-fpm.d/php-fpm.conf -v "$config/www.conf":/usr/local/etc/php-fpm.d/www.conf -d -p 127.0.0.1:"$port":9000 "php-image-$name" --nodaemonize --fpm-config /usr/local/etc/php-fpm.conf
 
 # Run memcached container
 docker stop "memcached-$name" 2>/dev/null
