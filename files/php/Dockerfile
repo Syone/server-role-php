@@ -1,7 +1,7 @@
 ARG PHP_VERSION=fpm
 FROM php:${PHP_VERSION}
 
-ARG PHP_EXTENSIONS="pdo_mysql exif gmp zip opcache mysqli intl"
+ARG PHP_EXTENSIONS="pdo_mysql exif gmp zip mysqli intl"
 
 RUN apt-get update && apt-get install -y \
 		libfreetype6-dev \

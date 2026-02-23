@@ -27,7 +27,7 @@ done
 [ "$port" = "" ] && port="9000"
 [ "$network" = "" ] && network="network-$name"
 [ "$version" = "" ] && version="fpm"
-[ "$extensions" = "" ] && extensions="pdo_mysql exif gmp zip opcache mysqli intl"
+[ "$extensions" = "" ] && extensions="pdo_mysql exif gmp zip mysqli intl"
 
 # Conf files
 config="$DIR/php-$name"
